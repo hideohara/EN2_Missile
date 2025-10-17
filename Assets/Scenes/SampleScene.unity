@@ -236,6 +236,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explosionPrefab_: {fileID: 7394879673577650896, guid: 0a97c56c7853b46418c9dc087a0c14fb, type: 3}
+  meteorPrefab_: {fileID: 216590821250242863, guid: a493df7650e4e3b41b74d26b77c78f2d, type: 3}
+  ground_: {fileID: 1717416117}
+  meteorInterval_: 1
 --- !u!4 &1070567602
 Transform:
   m_ObjectHideFlags: 0

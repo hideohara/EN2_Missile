@@ -16,6 +16,22 @@ public class GameManager : MonoBehaviour
     // メインカメラ
     private Camera mainCamera_;
 
+
+    // 隕石のプレハブ
+    [SerializeField]
+    private Meteor meteorPrefab_;
+
+    //隕石の生成関係
+    [SerializeField, Header("MeteorSpawner")]
+    // 隕石がぶつかる地面
+    private BoxCollider2D ground_;
+    // 隕石の生成の時間間隔
+    [SerializeField]
+    private float meteorInterval_ = 1;
+    // 隕石の生成までの時間
+    private float meteorTimer_;
+
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -35,7 +51,12 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         // クリックしたら爆発を生成
-        if (Input.GetMouseButtonDown(0)) { GenerateExplosion(); }
+        if (Input.GetMouseButtonDown(0)) 
+        { 
+            GenerateExplosion(); 
+        }
+
+        UpdateMeteorTimer();
     }
 
 
@@ -56,5 +77,47 @@ public class GameManager : MonoBehaviour
           Quaternion.identity
         );
     }
+
+    /// <summary>
+    /// スコアの加算
+    /// </summary>
+    /// <param name="point">加算するスコア</param>
+    public void AddScore(int point) { }
+
+    /// <summary>
+    /// ライフを減らす
+    /// </summary>
+    /// <param name="damage">減らす値</param>
+    public void Damage(int point) { }
+
+    /// <summary>
+    /// 隕石タイマの更新
+    /// </summary>
+    private void UpdateMeteorTimer()
+    {
+        meteorTimer_ -= Time.deltaTime;
+        if (meteorTimer_ > 0) { return; }
+        meteorTimer_ += meteorInterval_;
+        GenerateMeteor();
+    }
+
+
+    /// <summary>
+    /// 隕石の生成
+    /// </summary>
+    private void GenerateMeteor()
+    {
+        Vector3 spawnPosition = new Vector3(0, 6, 0);
+        Meteor meteor =
+          Instantiate(meteorPrefab_,
+          spawnPosition, Quaternion.identity);
+        meteor.Setup(ground_, this, explosionPrefab_);
+    }
+
+
+
+
+
+
 
 }
