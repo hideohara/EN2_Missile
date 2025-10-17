@@ -30,6 +30,11 @@ public class GameManager : MonoBehaviour
     private float meteorInterval_ = 1;
     // 隕石の生成までの時間
     private float meteorTimer_;
+    // 隕石の生成位置
+    [SerializeField]
+    private List<Transform> spawnPositions_;
+
+
 
 
     // Start is called before the first frame update
@@ -44,6 +49,21 @@ public class GameManager : MonoBehaviour
         // Cameraコンポーネントが取得できていなければ止める
         Assert.IsTrue(isGetComponent,
           "MainCameraにCameraコンポーネントがありません");
+
+        // 生成位置Listの要素数が1以上あることを確認
+        Assert.IsTrue(
+          spawnPositions_.Count > 0,
+          "spawnPositions_に要素が一つもありません。"
+        );
+        foreach (Transform t in spawnPositions_)
+        {
+            // 各要素にNullが含まれていないことを確認
+            Assert.IsNotNull(
+              t,
+              "spawnPositions_にNullが含まれています"
+            );
+        }
+
     }
 
 
@@ -107,7 +127,12 @@ public class GameManager : MonoBehaviour
     /// </summary>
     private void GenerateMeteor()
     {
-        Vector3 spawnPosition = new Vector3(0, 6, 0);
+        int max = spawnPositions_.Count;
+        int posIndex = Random.Range(0, max);
+        Vector3 spawnPosition =
+          spawnPositions_[posIndex].position;
+        //Vector3 spawnPosition = new Vector3(0, 6, 0);
+
         Meteor meteor =
           Instantiate(meteorPrefab_,
           spawnPosition, Quaternion.identity);
