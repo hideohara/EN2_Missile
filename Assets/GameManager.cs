@@ -36,11 +36,21 @@ public class GameManager : MonoBehaviour
 
 
     // スコア関係
-[SerializeField, Header("ScoreUISettings")]
-// スコア表示用テキスト
-private ScoreText scoreText_;
-// スコア
-private int score_;
+    [SerializeField, Header("ScoreUISettings")]
+    // スコア表示用テキスト
+    private ScoreText scoreText_;
+    // スコア
+    private int score_;
+
+    // ライフ関係
+    [SerializeField, Header("LifeUISettings")]
+    // ライフゲージ
+    private LifeBar lifeBar_;
+    // 最大体力
+    [SerializeField]
+    private float maxLife_ = 10;
+    // 現在体力
+    private float life_;
 
 
 
@@ -71,6 +81,8 @@ private int score_;
             );
         }
 
+        // 体力の初期化
+        ResetLife();
     }
 
 
@@ -120,8 +132,14 @@ private int score_;
     /// <summary>
     /// ライフを減らす
     /// </summary>
-    /// <param name="damage">減らす値</param>
-    public void Damage(int point) { }
+    /// <param name="point">減らす値</param>
+    public void Damage(float point)
+    {
+        life_ -= point;
+        // UIの更新
+        UpdateLifeBar();
+    }
+
 
     /// <summary>
     /// 隕石タイマの更新
@@ -153,6 +171,30 @@ private int score_;
     }
 
 
+
+    /// <summary>
+    /// ライフの初期化
+    /// </summary>
+    private void ResetLife()
+    {
+        life_ = maxLife_;
+        // UIの更新
+        UpdateLifeBar();
+    }
+
+
+    /// <summary>
+    /// ライフUIの更新
+    /// </summary>
+    private void UpdateLifeBar()
+    {
+        // 最大体力と現在体力の割合で何割かを算出
+        float lifeRatio = Mathf.Clamp01(
+          life_ / maxLife_
+        );
+        // 割合をlifeBar_へ伝え、UIに反映してもらう
+        lifeBar_.SetGaugeRatio(lifeRatio);
+    }
 
 
 
