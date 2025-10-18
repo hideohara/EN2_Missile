@@ -35,6 +35,13 @@ public class GameManager : MonoBehaviour
     private List<Transform> spawnPositions_;
 
 
+    // スコア関係
+[SerializeField, Header("ScoreUISettings")]
+// スコア表示用テキスト
+private ScoreText scoreText_;
+// スコア
+private int score_;
+
 
 
     // Start is called before the first frame update
@@ -102,7 +109,13 @@ public class GameManager : MonoBehaviour
     /// スコアの加算
     /// </summary>
     /// <param name="point">加算するスコア</param>
-    public void AddScore(int point) { }
+    public void AddScore(int point)
+    {
+        score_ += point;
+        scoreText_.SetScore(score_);
+    }
+
+
 
     /// <summary>
     /// ライフを減らす
