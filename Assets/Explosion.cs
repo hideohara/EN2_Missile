@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class Explosion : MonoBehaviour
 {
+   
+    public int chainNum = 0;
+
     private float maxLifeTime_ = 1;
     private float time_ = 0;
 
