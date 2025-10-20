@@ -25,6 +25,9 @@ public class Meteor : MonoBehaviour
     private Rigidbody2D rb_;
     private GameManager gameManager_;
 
+    // スコアエフェクトプレハブ
+    [SerializeField] ScoreEffect scoreEffectPrefab_;
+
     // Start is called before the first frame update
     private void Start()
     {
@@ -86,6 +89,14 @@ public class Meteor : MonoBehaviour
     /// </summary>
     private void Explosion()
     {
+        int score = 100;
+        ScoreEffect scoreEffect = Instantiate(
+          scoreEffectPrefab_,
+          transform.position,
+          Quaternion.identity
+        );
+        scoreEffect.SetScore(score);
+
         // GameManagerにscore加算を通知
         gameManager_.AddScore(100);
         // 爆発を生成し

@@ -150,6 +150,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fallSpeedMin_: 1
   fallSpeedMax_: 3
+  scoreEffectPrefab_: {fileID: 7124298972911868268, guid: 7beda84941bdfd140964a2cc7657c9b0, type: 3}
 --- !u!198 &759062715039981388
 ParticleSystem:
   m_ObjectHideFlags: 0
