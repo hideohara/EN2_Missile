@@ -12,6 +12,13 @@ public class GameManager : MonoBehaviour
     [SerializeField, Header("Prefabs")]
     // 爆発のプレハブ
     private Explosion explosionPrefab_;
+    [SerializeField]
+// レティクルのプレハブ
+private GameObject reticlePrefab_;
+
+[SerializeField]
+// ミサイルのプレハブ
+private Missile missilePrefab_;
 
     // メインカメラ
     private Camera mainCamera_;
@@ -92,7 +99,7 @@ public class GameManager : MonoBehaviour
         // クリックしたら爆発を生成
         if (Input.GetMouseButtonDown(0)) 
         { 
-            GenerateExplosion(); 
+            GenerateMissile(); 
         }
 
         UpdateMeteorTimer();
@@ -100,22 +107,23 @@ public class GameManager : MonoBehaviour
 
 
     /// <summary>
-    /// 爆発の生成
+    /// ミサイルの生成(追加)
     /// </summary>
-    private void GenerateExplosion()
+    private void GenerateMissile()
     {
-        // クリックしたスクリーン座標の取得し、ワールド座標に変換する
         Vector3 clickPosition =
           mainCamera_.ScreenToWorldPoint(Input.mousePosition);
         clickPosition.z = 0;
+        GameObject reticle = Instantiate(
+          reticlePrefab_, clickPosition, Quaternion.identity);
 
-        // クリックした座標に爆発を生成
-        Explosion explosion = Instantiate(
-          explosionPrefab_,
-          clickPosition,
-          Quaternion.identity
-        );
+        Vector3 launchPosiion = new Vector3(0, -3, 0);
+        Missile missile = Instantiate(
+          missilePrefab_, launchPosiion, Quaternion.identity);
+        missile.Setup(reticle);
     }
+
+
 
     /// <summary>
     /// スコアの加算
