@@ -5,6 +5,8 @@ using UnityEngine;
 
 [RequireComponent(typeof(Collider2D))]
 abstract public class ItemBase : MonoBehaviour
+//public class ItemBase : MonoBehaviour
+
 {
 
     // 移動速度。派生クラスでも使えるようにprotected
@@ -64,6 +66,7 @@ abstract public class ItemBase : MonoBehaviour
     //{
         
     //}
+
 
 
 }
